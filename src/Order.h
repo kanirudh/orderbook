@@ -36,6 +36,6 @@ inline std::ostream& operator<<(std::ostream& stream, Order const& order)
     stream << "id: " << order.id_ << ",";
     stream << "qty: " << order.qty_ << ",";
     stream << "price: " << order.price_ << ",";
-    stream << "side: " << order.side_ << ",";
+    stream << ((order.side_ == Side::Buy)?"Buy":"Sell");
     return stream;
 }

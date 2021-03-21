@@ -1,0 +1,11 @@
+add_executable(main_profile
+    main_profile.cpp
+    )
+target_link_libraries(main_profile
+    PRIVATE
+    orderbook::orderbook
+    )
+target_include_directories(main_profile
+    PRIVATE
+    ${CMAKE_SOURCE_DIR}
+    )

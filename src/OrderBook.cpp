@@ -3,6 +3,12 @@
 #include <iostream>
 #include <algorithm>
 
+/*
+ *
+ * Some simplifications done here, we are just interested in
+ * maintaing a orderbook, we don't return the information
+ * the individual executions. But that could be easily done
+ */
 void OrderBook::HandleOrder(Order order, Action action)
 {
     if (action == Action::Remove)
@@ -149,32 +155,25 @@ void OrderBook::removeFromBook(Order const& order)
 
 void OrderBook::Display() const
 {
-    std::cout << " Order Book " << std::endl;
-    std::cout << "Price, Quantity, UID, Buy/Sell" << std::endl;
+    std::cout << "\n<---------- Order Book -------->\n";
 
     for (int level = sell_orders_.size() - 1; level >= 0; level--)
     {
+        std::cout << sell_orders_[level].first << " -> ";
         auto const& orderlist = sell_orders_[level].second;
         for (int i = orderlist.size()-1;i >= 0; i--) {
-            auto const& order = orderlist[i];
-            std::cout << order.price_ << ",";
-            std::cout << order.qty_ << ",";
-            std::cout << order.id_ << ",";
-            std::cout << ((order.side_ == Side::Buy)?"Buy":"Sell");
-            std::cout << std::endl;
+            std::cout << "(id:" << orderlist[i].id_ << ",qty:" << orderlist[i].qty_ << ")\n";
         }
     }
+
+    std::cout << "\t|\n\t|\n";
 
     for (auto const& [price, orderlist] : buy_orders_)
     {
+        std::cout << price << " -> ";
         for (auto const& order : orderlist) {
-            std::cout << order.price_ << ",";
-            std::cout << order.qty_ << ",";
-            std::cout << order.id_ << ",";
-            std::cout << ((order.side_ == Side::Buy)?"Buy":"Sell");
-            std::cout << std::endl;
+            std::cout << "(id:" << order.id_ << ",qty:" << order.qty_ << ")\n";
         }
     }
-
-
+    std::cout << "<------------------------------>\n\n";
 }
